@@ -9,6 +9,7 @@ export const BasicsTypes = () => {
   return (
     <>
       <h3>Basics Types</h3>
+      <hr />
       {name}, {age}: {isActive && 'active'}
       <br />
       {powers.join(', ')}

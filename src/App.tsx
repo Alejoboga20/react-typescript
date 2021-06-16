@@ -1,4 +1,5 @@
 import { BasicsTypes } from './typescript/BasicsTypes';
+import { LiteralObjects } from './typescript/LiteralObjects';
 
 const App = () => {
   return (
@@ -6,8 +7,9 @@ const App = () => {
       <h1>Intro to Typescript - React</h1>
       
       <hr/>
-      
+
       <BasicsTypes/>
+      <LiteralObjects />
     </div>
   )
 }
