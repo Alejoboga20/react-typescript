@@ -1,4 +1,4 @@
-import { useReducer } from "react"
+import { useEffect, useReducer } from "react";
 
 interface initialLoginState {
   validating: boolean;
@@ -7,7 +7,7 @@ interface initialLoginState {
   name: string;
 }
 
-type AuthAction = { type: string, payload: Object}
+type AuthAction = { type: string}
 
 const initialState: initialLoginState = {
   validating: true,
@@ -17,20 +17,47 @@ const initialState: initialLoginState = {
 }
 
 const authReducer = (state: initialLoginState, action: AuthAction): initialLoginState => {
-  return {
-    ...initialState
+
+  switch (action.type) {
+    case 'login':
+      return {
+        ...state,
+        validating: false,
+        token: 'ABC123'
+      }
+    case 'logout':
+      return {
+        ...state,
+        validating: false,
+        token: null,
+        username: '',
+        name: ''
+      }
+    default:
+      return state;
   }
 };
 
 export const Login = () => {
 
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [{validating}, dispatch] = useReducer(authReducer, initialState);
+
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch({type: 'logout'})
+    }, 1500)
+  }, []);
+
+  if(validating) {
+    return (
+      <div className="aler alert-info">Validating...</div>
+    )
+  }
 
   return (
     <>
      <h3>Login</h3>
      <hr/>
-     <div className="aler alert-info">Validating...</div>
      <div className="aler alert-danger">Not Authenticated</div>
      <div className="aler alert-success">Authenticated</div>
 
