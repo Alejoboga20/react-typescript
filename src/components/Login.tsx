@@ -7,7 +7,11 @@ interface initialLoginState {
   name: string;
 }
 
-type AuthAction = { type: string}
+type LoginActionPayload = { username: string, name: string }
+
+type AuthAction = 
+  | { type: 'logout'} 
+  | {type: 'login', payload: LoginActionPayload};
 
 const initialState: initialLoginState = {
   validating: true,
@@ -20,10 +24,13 @@ const authReducer = (state: initialLoginState, action: AuthAction): initialLogin
 
   switch (action.type) {
     case 'login':
+      const { name, username } = action.payload;
       return {
         ...state,
         validating: false,
-        token: 'ABC123'
+        token: 'ABC123',
+        name,
+        username
       }
     case 'logout':
       return {
@@ -40,13 +47,16 @@ const authReducer = (state: initialLoginState, action: AuthAction): initialLogin
 
 export const Login = () => {
 
-  const [{validating}, dispatch] = useReducer(authReducer, initialState);
+  const [{validating, token, name}, dispatch] = useReducer(authReducer, initialState);
 
   useEffect(() => {
     setTimeout(() => {
       dispatch({type: 'logout'})
     }, 1500)
   }, []);
+
+  const login = () => dispatch({type: 'login', payload: { username: 'testUser', name: 'test'}});
+  const logout = () => dispatch({type: 'logout'});
 
   if(validating) {
     return (
@@ -58,17 +68,23 @@ export const Login = () => {
     <>
      <h3>Login</h3>
      <hr/>
-     <div className="aler alert-danger">Not Authenticated</div>
-     <div className="aler alert-success">Authenticated</div>
+     {
+       (token ? <div className="aler alert-success">Authenticated as {name}</div> : <div className="aler alert-danger">Not Authenticated</div>)
+     }
+     {
+       (token) ? 
+        (
+          <button className="btn btn-danger" onClick={logout}>
+            Logout
+          </button>
+        ) : 
+        (
+          <button className="btn btn-primary" onClick={login}>
+            Login
+          </button>
+        )
 
-     <button className="btn btn-primary">
-       Login
-     </button>
-
-     <button className="btn btn-danger">
-       Logout
-     </button>
-
+     }
     </>
   )
 }
