@@ -1,5 +1,31 @@
+import { useReducer } from "react"
+
+interface initialLoginState {
+  validating: boolean;
+  token: string | null;
+  username: string;
+  name: string;
+}
+
+type AuthAction = { type: string, payload: Object}
+
+const initialState: initialLoginState = {
+  validating: true,
+  token: null,
+  username: '',
+  name: ''
+}
+
+const authReducer = (state: initialLoginState, action: AuthAction): initialLoginState => {
+  return {
+    ...initialState
+  }
+};
 
 export const Login = () => {
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
   return (
     <>
      <h3>Login</h3>
