@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ReqResList, User } from "../interfaces/reqRes.interface";
+import { ReqResList, User } from '../interfaces/reqRes.interface';
 import { reqResApi } from "./api/reqRes";
 
 export const Users = () => {
@@ -14,6 +14,22 @@ export const Users = () => {
 
   }, []);
 
+  const renderItem = ( user: User ) => {
+    const {id, avatar, first_name, last_name, email} = user;
+
+    return (
+      <tr key={id.toString()}>
+        <td>
+          <img src={avatar} alt={first_name} style={{
+            width: 35, borderRadius: 100
+          }}/>
+        </td>
+        <td>{first_name} {last_name}</td>
+        <td>{email}</td>
+      </tr>
+    )
+  };
+
   return (
     <>
       <h3>Users</h3>
@@ -26,7 +42,9 @@ export const Users = () => {
           </tr>
         </thead>
         <tbody>
-
+          {
+            users.map(user => renderItem(user))
+          }
         </tbody>
       </table>
     </>
