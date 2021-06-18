@@ -47,6 +47,8 @@ export const Users = () => {
           }
         </tbody>
       </table>
+
+      <button className="btn btn-primary">Next</button>
     </>
   )
 }
