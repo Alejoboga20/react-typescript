@@ -4,6 +4,7 @@ import { Functions } from './typescript/Functions';
 import { LiteralObjects } from './typescript/LiteralObjects';
 import { CounterWithHook } from './components/CounterWithHook';
 import { Login } from './components/Login';
+import { Users } from './components/Users';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
       <Counter />
       <CounterWithHook />
       <Login />
+      <Users />
     </div>
   )
 }
