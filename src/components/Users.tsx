@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
 import { useUser } from '../hooks/useUser';
 import { User } from '../interfaces/reqRes.interface';
 
 export const Users = () => {
-  const { users, loadUsers } = useUser();
-
-  useEffect(() => {
-    loadUsers();
-  }, []);
+  const { users, nextPage, prevPage } = useUser();
 
   const renderItem = (user: User) => {
     const { id, avatar, first_name, last_name, email } = user;
@@ -46,8 +41,12 @@ export const Users = () => {
         <tbody>{users.map((user) => renderItem(user))}</tbody>
       </table>
 
-      <button className='btn btn-primary' onClick={loadUsers}>
+      <button className='btn btn-primary' onClick={nextPage}>
         Next
+      </button>
+
+      <button className='btn btn-primary' onClick={prevPage}>
+        Previous
       </button>
     </>
   );

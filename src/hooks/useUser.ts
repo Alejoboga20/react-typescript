@@ -1,10 +1,14 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { reqResApi } from '../components/api/reqRes';
 import { ReqResList, User } from '../interfaces/reqRes.interface';
 
 export const useUser = () => {
   const [users, setUsers] = useState<User[]>([]);
   const pagRef = useRef(1);
+
+  useEffect(() => {
+    loadUsers();
+  }, []);
 
   const loadUsers = async () => {
     const response = await reqResApi.get<ReqResList>('/users', {
@@ -15,11 +19,23 @@ export const useUser = () => {
 
     if (response.data.data.length > 0) {
       setUsers(response.data.data);
-      pagRef.current++;
     } else {
+      pagRef.current--;
       alert('No more registries');
     }
   };
 
-  return { users, loadUsers };
+  const nextPage = () => {
+    pagRef.current++;
+    loadUsers();
+  };
+
+  const prevPage = () => {
+    if (pagRef.current > 1) {
+      pagRef.current--;
+      loadUsers();
+    }
+  };
+
+  return { users, nextPage, prevPage };
 };
