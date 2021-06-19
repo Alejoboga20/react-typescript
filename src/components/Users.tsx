@@ -4,7 +4,7 @@ import { reqResApi } from "./api/reqRes";
 
 export const Users = () => {
 
-  const [users, setUsers] = useState<User[]>([])
+  const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
 
@@ -12,10 +12,9 @@ export const Users = () => {
 
   }, []);
 
-  const loadUsers = () => {
-    reqResApi.get<ReqResList>('/users')
-    .then(response => setUsers(response.data.data))
-    .catch(e => console.log(e));
+  const loadUsers = async () => {
+    const response = await reqResApi.get<ReqResList>('/users');
+    setUsers(response.data.data);
   };
 
   const renderItem = ( user: User ) => {
@@ -52,7 +51,7 @@ export const Users = () => {
         </tbody>
       </table>
 
-      <button className="btn btn-primary">Next</button>
+      <button className="btn btn-primary" onClick={loadUsers}>Next</button>
     </>
   )
 }
