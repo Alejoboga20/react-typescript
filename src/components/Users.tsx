@@ -8,11 +8,15 @@ export const Users = () => {
 
   useEffect(() => {
 
-    reqResApi.get<ReqResList>('/users')
-      .then(response => setUsers(response.data.data))
-      .catch(e => console.log(e));
+    loadUsers();
 
   }, []);
+
+  const loadUsers = () => {
+    reqResApi.get<ReqResList>('/users')
+    .then(response => setUsers(response.data.data))
+    .catch(e => console.log(e));
+  };
 
   const renderItem = ( user: User ) => {
     const {id, avatar, first_name, last_name, email} = user;
