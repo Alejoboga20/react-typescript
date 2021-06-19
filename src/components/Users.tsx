@@ -1,29 +1,13 @@
-import { useEffect, useState, useRef } from 'react';
-import { ReqResList, User } from '../interfaces/reqRes.interface';
-import { reqResApi } from './api/reqRes';
+import { useEffect } from 'react';
+import { useUser } from '../hooks/useUser';
+import { User } from '../interfaces/reqRes.interface';
 
 export const Users = () => {
-  const [users, setUsers] = useState<User[]>([]);
-  const pagRef = useRef(1);
+  const { users, loadUsers } = useUser();
 
   useEffect(() => {
     loadUsers();
   }, []);
-
-  const loadUsers = async () => {
-    const response = await reqResApi.get<ReqResList>('/users', {
-      params: {
-        page: pagRef.current
-      }
-    });
-
-    if (response.data.data.length > 0) {
-      setUsers(response.data.data);
-      pagRef.current++;
-    } else {
-      alert('No more registries');
-    }
-  };
 
   const renderItem = (user: User) => {
     const { id, avatar, first_name, last_name, email } = user;
