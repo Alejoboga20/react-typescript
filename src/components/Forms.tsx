@@ -1,20 +1,6 @@
 import { useState } from 'react';
 
 export const Forms = () => {
-  const [form, setForm] = useState({
-    email: 'test@test.com',
-    password: '123456'
-  });
-
-  const { email, password } = form;
-
-  const onChange = (value: string, field: string) => {
-    setForm({
-      ...form,
-      [field]: value
-    });
-  };
-
   return (
     <>
       <h3>Forms</h3>
