@@ -23,13 +23,19 @@ export const Forms = () => {
         className='form-control'
         placeholder='Email'
         value={email}
+        onChange={({ target }) => onChange(target.value, 'email')}
       />
       <input
         type='text'
         className='form-control mt-2 mb-2'
         placeholder='Password'
         value={password}
+        onChange={({ target }) => onChange(target.value, 'password')}
       />
+
+      <code>
+        <pre>{JSON.stringify(form, '', 2)}</pre>
+      </code>
     </>
   );
 };
