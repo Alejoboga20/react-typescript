@@ -1,15 +1,18 @@
 import { useState } from 'react';
 
-export const useForm = () => {
-  const [form, setForm] = useState({
-    email: 'test@test.com',
-    password: '123456'
-  });
+export const useForm = <T extends Object>(form: T) => {
+  const [state, setState] = useState(form);
 
   const onChange = (value: string, field: string) => {
-    setForm({
-      ...form,
+    setState({
+      ...state,
       [field]: value
     });
+  };
+
+  return {
+    ...state,
+    onChange,
+    state
   };
 };

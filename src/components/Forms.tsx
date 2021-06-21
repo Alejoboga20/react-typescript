@@ -1,6 +1,17 @@
 import { useState } from 'react';
+import { useForm } from '../hooks/useForm';
 
 export const Forms = () => {
+  const {
+    state: form,
+    email,
+    password,
+    onChange
+  } = useForm({
+    email: 'test@test.com',
+    password: '123456'
+  });
+
   return (
     <>
       <h3>Forms</h3>
