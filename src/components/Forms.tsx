@@ -8,6 +8,13 @@ export const Forms = () => {
 
   const { email, password } = form;
 
+  const onChange = (value: string, field: string) => {
+    setForm({
+      ...form,
+      [field]: value
+    });
+  };
+
   return (
     <>
       <h3>Forms</h3>
