@@ -1,20 +1,29 @@
-import React from 'react'
+import { useState } from 'react';
 
-export const Counter = () => {
+export const Counter = ({ initialValue = 0 }: CounterProps) => {
+	const [count, setCount] = useState<number>(initialValue);
 
-  const [count, setCount] = React.useState<number>(0);
+	const handleAdd = (number: number): void => {
+		setCount((prevCount) => prevCount + number);
+	};
 
-  const handleAdd = (number: number): void => {
-    setCount(count + number);
-  };
+	return (
+		<>
+			<h3>
+				Counter: <small>{count}</small>
+			</h3>
+			<hr />
 
-  return (
-    <>
-     <h3>Counter: <small>{count}</small></h3> 
-     <hr/>
+			<button className='btn btn-primary' onClick={() => handleAdd(1)}>
+				+1
+			</button>
+			<button className='btn btn-secondary' onClick={() => handleAdd(-1)}>
+				-1
+			</button>
+		</>
+	);
+};
 
-     <button className="btn btn-primary" onClick={() => handleAdd(1)}>+1</button>
-     <button className="btn btn-secondary" onClick={() => handleAdd(-1)}>-1</button>
-    </>
-  );
+interface CounterProps {
+	initialValue?: number;
 }
