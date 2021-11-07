@@ -1,26 +1,25 @@
 import { useState } from 'react';
 
 export const CounterBy = ({ initialValue = 0 }: CounterByProps) => {
-	const [countState, setCountState] = useState({
+	const [{ counter, clicks }, setCountState] = useState<CounterByState>({
 		counter: initialValue,
 		clicks: 0,
 	});
 
 	const handleAdd = (value: number): void => {
-		setCountState((prevState) => ({
-			...prevState,
-			counter: prevState.counter + value,
-			clicks: prevState.clicks + 1,
+		setCountState(({ clicks, counter }) => ({
+			counter: counter + value,
+			clicks: clicks + 1,
 		}));
 	};
 
 	return (
 		<>
 			<h3>
-				Counter By: <small>{countState.counter}</small>
+				Counter By: <small>{counter}</small>
 			</h3>
 			<h3>
-				Clicks: <small>{countState.clicks}</small>
+				Clicks: <small>{clicks}</small>
 			</h3>
 			<hr />
 
@@ -36,4 +35,9 @@ export const CounterBy = ({ initialValue = 0 }: CounterByProps) => {
 
 interface CounterByProps {
 	initialValue?: number;
+}
+
+interface CounterByState {
+	counter: number;
+	clicks: number;
 }
