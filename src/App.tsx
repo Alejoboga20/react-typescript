@@ -1,5 +1,6 @@
 import { Counter } from './components/Counter';
 import { CounterBy } from './components/CounterBy';
+import { CounterEffect } from './components/CounterEffect';
 
 const App = () => {
 	return (
@@ -9,6 +10,7 @@ const App = () => {
 
 			<Counter initialValue={0} />
 			<CounterBy />
+			<CounterEffect />
 		</>
 	);
 };
