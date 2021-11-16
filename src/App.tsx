@@ -11,6 +11,7 @@ const App = () => {
 			<Counter initialValue={0} />
 			<CounterBy />
 			<CounterEffect />
+			<CounterEffect />
 		</>
 	);
 };

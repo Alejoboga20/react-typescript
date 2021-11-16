@@ -1,27 +1,28 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 
 const MAX_COUNT = 10;
 
 export const CounterEffect = () => {
 	const [count, setCount] = useState(5);
+	const countElement = useRef<HTMLHeadingElement>(null);
 
 	const handleAdd = (number: number): void => {
 		setCount((prevCount) => Math.min(prevCount + number, MAX_COUNT));
 	};
 
-	useEffect(() => {
+	useLayoutEffect(() => {
 		if (count < MAX_COUNT) return;
 
 		gsap
-			.to('h2', { y: -10, duration: 0.2, ease: 'ease.out' })
-			.then(() => gsap.to('h2', { y: 0, duration: 0.1, ease: 'bounce.out' }));
+			.to(countElement.current, { y: -10, duration: 0.2, ease: 'ease.out' })
+			.then(() => gsap.to(countElement.current, { y: 0, duration: 0.1, ease: 'bounce.out' }));
 	}, [count]);
 
 	return (
 		<>
 			<h3>CounterEffect:</h3>
-			<h2>{count}</h2>
+			<h2 ref={countElement}>{count}</h2>
 			<hr />
 
 			<button className='btn btn-primary' onClick={() => handleAdd(1)}>
