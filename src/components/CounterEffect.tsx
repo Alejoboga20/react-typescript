@@ -14,9 +14,11 @@ export const CounterEffect = () => {
 	useLayoutEffect(() => {
 		if (count < MAX_COUNT) return;
 
-		gsap
+		const timeLime = gsap.timeline();
+
+		timeLime
 			.to(countElement.current, { y: -10, duration: 0.2, ease: 'ease.out' })
-			.then(() => gsap.to(countElement.current, { y: 0, duration: 0.1, ease: 'bounce.out' }));
+			.to(countElement.current, { y: 0, duration: 0.1, ease: 'bounce.out' });
 	}, [count]);
 
 	return (
