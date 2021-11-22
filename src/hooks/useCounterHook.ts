@@ -1,28 +1,31 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useLayoutEffect, useRef, useState, useEffect } from 'react';
 import { gsap } from 'gsap';
 
-const MAX_COUNT = 10;
-
-export const useCounterHook = () => {
+export const useCounterHook = ({ maxCount = 10 }) => {
 	const [count, setCount] = useState(5);
-	const countElement = useRef<HTMLHeadingElement>(null);
+	const elementToAnimate = useRef<any>(null);
+
+	const tl = useRef(gsap.timeline());
 
 	const handleAdd = (number: number): void => {
-		setCount((prevCount) => Math.min(prevCount + number, MAX_COUNT));
+		setCount((prevCount) => Math.min(prevCount + number, maxCount));
 	};
 
 	useLayoutEffect(() => {
-		if (count < MAX_COUNT) return;
+		if (!elementToAnimate.current) return;
 
-		const timeLime = gsap.timeline();
+		tl.current
+			.to(elementToAnimate.current, { y: -10, duration: 0.2, ease: 'ease.out' })
+			.to(elementToAnimate.current, { y: 0, duration: 0.1, ease: 'bounce.out' })
+			.pause();
+	}, []);
 
-		timeLime
-			.to(countElement.current, { y: -10, duration: 0.2, ease: 'ease.out' })
-			.to(countElement.current, { y: 0, duration: 0.1, ease: 'bounce.out' });
+	useEffect(() => {
+		tl.current.play(0);
 	}, [count]);
 
 	return {
-		countElement,
+		elementToAnimate,
 		count,
 		handleAdd,
 	};
