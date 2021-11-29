@@ -9,13 +9,14 @@ const INITIAL_STATE: CounterState = {
 type CounterAction = { type: 'increaseBy'; payload: { value: number } } | { type: 'reset' };
 
 const counterReducer = (state: CounterState, action: CounterAction): CounterState => {
+	const { counter, changes } = state;
 	switch (action.type) {
 		case 'increaseBy':
 			return {
 				...state,
-				changes: state.changes + 1,
-				previous: state.counter,
-				counter: state.counter + action.payload.value,
+				changes: changes + 1,
+				previous: counter,
+				counter: counter + action.payload.value,
 			};
 		case 'reset':
 			return {
